@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>vue study</title>
+    <script src="/js/vue.min.js"></script>
+    <script>
+        const NotFound = { template: '<p>Page not found</p>' }
+        const Home = { template: '<p>home page</p>' }
+        const About = { template: '<p>about page</p>' }
+
+        const routes = {
+            '/': Home,
+            '/about': About
+        }
+
+        window.onload = function () {
+            window.appVM = new Vue({
+                el: "#app",
+                data: {
+                    "text": "Hello, World!",
+                    "title": "app"
+                },
+                computed: {
+                    ViewComponent() {
+                        return routes[this.CurrentRoute] || NotFound
+                    },
+                    CurrentRoute() {
+                        return window.location.pathname
+                    }
+                },
+                render(h) { return h(this.ViewComponent) }
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <div id="app" v-text="text" v-bind:title="title"></div>
+</body>
+</html>
